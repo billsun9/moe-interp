@@ -5,11 +5,13 @@ from datasets import load_dataset
 from .data_utils import load_and_format_dataset
 from .activation_extractor_utils import OLMoEActivationExtractor
 
+from moe.path_config import MODEL_CACHE_DIR, SAVE_ACTS_PATH_DIR, DATASET_CACHE_DIR
+
 def process_sample_texts(
     sample_texts: List[str],
     extractor: OLMoEActivationExtractor,
     dataset_name: str,
-    base_save_dir: str = "/local/bys2107/research/data/OLMoE-acts/custom",
+    base_save_dir: str = os.path.join(SAVE_ACTS_PATH_DIR, "custom"),
     batch_size: int = 4,
     metadata = None
 ) -> str:
@@ -82,11 +84,11 @@ def process_dataset_activations(
     dataset_name: str,
     extractor: OLMoEActivationExtractor,
     num_samples: int = 25,
-    base_save_dir: str = "/local/bys2107/research/data/OLMoE-acts",
+    base_save_dir: str = SAVE_ACTS_PATH_DIR,
     question_only: bool = False,
     batch_size: int = 10,
     metadata = None,
-    dataset_dir: str = "/local/bys2107/datasets_cache"
+    dataset_dir: str = DATASET_CACHE_DIR
 ) -> Dict[str, str]:
     """
     Process a dataset and extract activations for the first N samples.
@@ -183,20 +185,22 @@ def process_dataset_activations(
 def run_all_datasets(
     datasets_to_process,
     num_samples: int = 100,
-    base_save_dir: str = "/local/bys2107/research/data/OLMoE-acts",
-    batch_size: int = 4
+    base_save_dir: str = SAVE_ACTS_PATH_DIR,
+    batch_size: int = 4,
+    cache_dir: str = MODEL_CACHE_DIR,
+    dataset_dir: str = DATASET_CACHE_DIR
 ):
     """
     Run activation extraction on all supported datasets.
     
     Args:
         num_samples: Number of samples per split
-        base_save_dir: Base directory for saving
+        base_save_dir: Base directory for saving dataset activations
         batch_size: Batch size for processing
     """
     print("🚀 Starting dataset activation extraction on all datasets...")
     
-    extractor = OLMoEActivationExtractor()
+    extractor = OLMoEActivationExtractor(cache_dir = cache_dir)
 
     if not extractor.load_model_and_tokenizer():
         return
@@ -211,7 +215,8 @@ def run_all_datasets(
                 num_samples=num_samples,
                 base_save_dir=base_save_dir,
                 question_only=question_only,
-                batch_size=batch_size
+                batch_size=batch_size,
+                dataset_dir=dataset_dir
             )
             
             key = f"{dataset_name}_{'questions' if question_only else 'full'}"

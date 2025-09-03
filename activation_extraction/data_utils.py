@@ -1,10 +1,12 @@
 from datasets import load_dataset
 from typing import List, Tuple, Dict
 
+from moe.path_config import DATASET_CACHE_DIR
+
 def load_and_format_dataset(
     dataset_name: str,
     subset: str = None,
-    cache_dir: str = "/local/bys2107/datasets_cache",
+    cache_dir: str = DATASET_CACHE_DIR,
     question_only: bool = False
 ) -> Dict[str, List[str]]:
     """
@@ -65,7 +67,7 @@ def load_and_format_dataset(
     }
 
 
-def test_load_and_format_dataset(cache_dir = "/local/bys2107/datasets_cache"):
+def test_load_and_format_dataset(cache_dir = DATASET_CACHE_DIR):
     dataset_names = ["gsm8k", "arc-easy", "arc-challenge", "sciq"]
 
     for name in dataset_names:

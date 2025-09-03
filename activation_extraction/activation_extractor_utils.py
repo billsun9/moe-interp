@@ -3,6 +3,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from typing import List, Dict, Any, Optional, Tuple
 import os
 
+from moe.path_config import MODEL_CACHE_DIR, SAVE_ACTS_PATH_DIR
+
 class OLMoEActivationExtractor:
     """
     A modularized class for extracting and saving OLMoE model activations.
@@ -10,7 +12,7 @@ class OLMoEActivationExtractor:
 
     def __init__(self, 
                  model_name: str = "allenai/OLMoE-1B-7B-0125-Instruct",
-                 cache_dir: str = "/local/bys2107/hf_cache",
+                 cache_dir: str = MODEL_CACHE_DIR,
                  device: str = "cuda" if torch.cuda.is_available() else "cpu",
                  batch_size: int = 4):
         self.model_name = model_name
@@ -68,7 +70,7 @@ class OLMoEActivationExtractor:
                                   max_length: Optional[int] = None,
                                   batch_size: Optional[int] = None) -> Dict[str, Any]:
         """
-        True batched extraction of activations.
+        Batched extraction of activations.
 
         Args:
             texts: list of input texts
@@ -258,6 +260,9 @@ class OLMoEActivationExtractor:
         print(self.model)
         print(f"total_params = {sum(p.numel() for p in self.model.parameters())}")
 
+        is_cuda = next(self.model.parameters()).is_cuda
+        print(f"Is model on CUDA (GPU)? {is_cuda}")
+
     def print_activation_summary(self, data: Dict[str, Any]):
         """
         Print a summary of the activation data.
@@ -289,8 +294,8 @@ class OLMoEActivationExtractor:
 
 def test_single_activation(
     model_name: str = "allenai/OLMoE-1B-7B-0125-Instruct",
-    cache_dir: str = "/local/bys2107/hf_cache",
-    save_path: str = "/local/bys2107/research/data/OLMoE-acts/test_acts.pt"):
+    cache_dir: str = MODEL_CACHE_DIR,
+    save_path: str = os.path.join(SAVE_ACTS_PATH_DIR, "test_acts.pt")):
     """
     Test function that replicates the original functionality.
     
@@ -333,8 +338,8 @@ def test_single_activation(
 
 def test_batch_activation(
     model_name: str = "allenai/OLMoE-1B-7B-0125-Instruct",
-    cache_dir: str = "/local/bys2107/hf_cache",
-    save_path: str = "/local/bys2107/research/data/OLMoE-acts/test_acts.pt"):
+    cache_dir: str = MODEL_CACHE_DIR,
+    save_path: str = os.path.join(SAVE_ACTS_PATH_DIR, "test_acts.pt")):
     """
     Test function for batch processing.
     
@@ -379,5 +384,3 @@ def test_batch_activation(
     except Exception as e:
         print(f"❌ Batch test failed: {e}")
         return False
-
-
