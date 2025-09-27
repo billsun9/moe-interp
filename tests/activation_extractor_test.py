@@ -13,3 +13,12 @@ if __name__ == "__main__":
         print("🎉 Batch activation test passed!")
     else:
         print("⚠️ Batch activation test failed")
+
+    if test_mlp_extraction():
+        print("🎉 MLP extraction test passed!")
+    else:
+        print("⚠️ MLP extraction test failed")
+    if test_extract_topk_routing_batch():
+        print("🎉 TopK Idxs/Weights test passed!")
+    else:
+        print("⚠️ TopK Idxs/Weights test failed")

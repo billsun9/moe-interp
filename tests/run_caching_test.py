@@ -25,19 +25,19 @@ def verify_saved_activations(
         print("❌ Failed to load file")
         return False
     
-    # Additional dataset-specific info
-    if "dataset_name" in loaded_data:
-        print(f"  Dataset: {loaded_data['dataset_name']}")
-        print(f"  Split: {loaded_data['split']}")
-        print(f"  Question only: {loaded_data['question_only']}")
-        print("TYPE", type(loaded_data['prerouting_logits']))
-        if type(loaded_data['prerouting_logits']) == list:
-            print(f"  Number of samples: {len(loaded_data['prerouting_logits'])}")
-            print(f"  Prerouting logits shape: {loaded_data['prerouting_logits'][0].shape}")
-            print(f"  Prerouting logits shape: {loaded_data['routing_logits'][0].shape}")
+    for key in loaded_data.keys():
+        if type(loaded_data[key]) == list:
+            if type(loaded_data[key][-1]) == str or type(loaded_data[key][-1]) == list:
+                print(f"{key}: {loaded_data[key][-1]}")
+            elif type(loaded_data[key][-1]) == torch.Tensor:
+                print(f"{key} shape: {loaded_data[key][-1].shape}")
+            else:
+                print(f"{key} is present")
+        elif type(loaded_data[key]) == str:
+            print(f"{key}: {loaded_data[key]}")
         else:
-            print(f"  Number of samples: 1")
-    
+            print(f"{key} is present")
+
     return True
 
 # Example usage functions
@@ -45,7 +45,8 @@ def run_single_dataset_test(
     model_name: str = "allenai/OLMoE-1B-7B-0125-Instruct",
     cache_dir: str = MODEL_CACHE_DIR,
     dataset_dir: str = DATASET_CACHE_DIR,
-    base_save_dir: str = SAVE_ACTS_PATH_DIR):
+    base_save_dir: str = SAVE_ACTS_PATH_DIR,
+    extract_fn: str = "extract_topk_routing_batch"):
     """Example: Process just GSM8K with questions only."""
     print("📝 Example: Processing GSM8K questions only...")
     
@@ -53,14 +54,15 @@ def run_single_dataset_test(
     extractor = OLMoEActivationExtractor(model_name, cache_dir)
     if not extractor.load_model_and_tokenizer():
         return
-    extractor.print_model_summary()
+    # extractor.print_model_summary()
     # Process GSM8K
     save_paths = process_dataset_activations(
         dataset_name="gsm8k",
         extractor=extractor,
         num_samples=20,  # Just 20 samples for this example
         question_only=True,
-        base_save_dir=base_save_dir
+        base_save_dir=base_save_dir,
+        extract_fn=extract_fn
     )
     print("SAVE PATHS", save_paths)
     # Verify one of the saved files
@@ -110,7 +112,10 @@ if __name__ == "__main__":
     # run_all_datasets(num_samples=100, batch_size=10)
     
     # Or run single dataset example
-    run_single_dataset_test()
+    print("Testing extract_topk_routing_batch")
+    run_single_dataset_test(extract_fn = "extract_topk_routing_batch")
+    print("Testing extract_activations_batch")
+    run_single_dataset_test(extract_fn = "extract_activations_batch")
     
     # Or run custom processing
     # run_custom_processing()

@@ -1,10 +1,63 @@
 import os
 import torch
+import glob
 import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm, Normalize
 import torch.nn.functional as F
 import numpy as np
-from typing import List, Dict, Tuple, Any
+from typing import List, Dict, Tuple, Any, Union
 from collections import defaultdict
+import heapq
+
+from moe.activation_extraction.activation_extractor_utils import OLMoEActivationExtractor
+from moe.path_config import SAVE_ACTS_PATH_DIR
+
+def load_all_activations(
+    datasets_to_process: List[Tuple[str, bool]],
+    extractor,
+    split_names: List[str] = ["train", "test"],
+    verbose: bool = True,
+    simple_keyname: bool = True
+) -> Dict[str, object]:
+    """
+    Load activations for multiple datasets and splits.
+
+    Args:
+        datasets_to_process: List of (dataset_name, question_only) tuples
+        extractor: Initialized OLMoEActivationExtractor
+        split_names: List of splits to load (default=["train", "test"])
+        verbose: Whether to print missing file warnings
+        simple_keyname: If True, use dataset_name as dict key; else include split and suffix
+
+    Returns:
+        Dictionary mapping keys like 'gsm8k_train_questions' to activation objects
+    """
+    activations = {}
+
+    for dataset_name, question_only in datasets_to_process:
+        question_suffix = "_questions" if question_only else "_full"
+        dataset_dir = os.path.join(SAVE_ACTS_PATH_DIR, dataset_name)
+
+        for split in split_names:
+            # Pattern to match: e.g., mbpp_train_full_XXXsamples.pt
+            pattern = f"{dataset_name}_{split}{question_suffix}_*samples.pt"
+            search_path = os.path.join(dataset_dir, pattern)
+
+            matched_files = glob.glob(search_path)
+            if matched_files:
+                filepath = matched_files[0]  # Use the first match
+                if len(split_names) == 1 and simple_keyname:
+                    key = dataset_name
+                else:
+                    key = f"{dataset_name}_{split}_{question_suffix.lstrip('_')}"
+                activations[key] = extractor.load_activations(filepath)
+            else:
+                if verbose:
+                    print(f"[Warning] No activation file found for pattern: {search_path}")
+
+    return activations
+
+
 # ------------------------
 # USED FOR PLOTTING PER-LAYER SOFTMAX(ROUTING_LOGITS) ACROSS TOKENS/SAMPLES
 # ------------------------
@@ -390,3 +443,414 @@ def plot_expert_embeddings(
     plt.close()
     print(f"[Saved] {save_path}")
 
+
+def find_expert_coactivations(
+    datasets: Union[Dict[str, List], List[Dict[str, List]]],
+    layer: int,
+    top_k: int = 2,
+    order_sensitive: bool = False,
+    keep_n: int = 5,
+) -> Dict[Tuple[int, ...], Dict]:
+    """
+    Find most frequent expert co-activations at a given layer.
+
+    Args:
+        datasets: A single dataset dict or a list of dataset dicts.
+                  Each dict must include keys: ["dataset_name", "texts", "tokens", "topk_indices", "topk_scores"]
+        layer: Which layer to analyze
+        top_k: How many top experts to consider per token (e.g., 2 for expert pairs)
+        order_sensitive: 
+            - If False: (e1, e2) == (e2, e1)
+            - If True: preserve order of experts
+        keep_n: How many top examples (by score) to keep per expert set
+
+    Returns:
+        A dict mapping (expert1, ..., expertK) -> {
+            "count": number of occurrences,
+            "top_examples": list of up to `keep_n` dicts, sorted by combined_score desc
+        }
+    """
+    if isinstance(datasets, dict):
+        datasets = [datasets]
+
+    # Use a heap to maintain top-N examples efficiently
+    coactivation_stats = defaultdict(lambda: {"count": 0, "top_examples_heap": []})
+    
+    # Counter to ensure unique ordering in heap tuples
+    counter = 0
+
+    for dataset in datasets:
+        dataset_name = dataset["dataset_name"]
+        split = dataset["split"]
+        question_only = dataset["question_only"]
+        texts = dataset["texts"] # List[str]
+        tokens_list = dataset["tokens"] # List[List[str]]
+        indices_list = dataset["topk_indices"] # List[torch.Tensor(16, seq_len, 8)]
+        scores_list = dataset["topk_scores"] # List[torch.Tensor(16, seq_len, 8)]
+
+        for sample_idx, (text, tokens, topk_idx, topk_val) in enumerate(zip(texts, tokens_list, indices_list, scores_list)):
+            # Extract top-k data for the specified layer
+            idx_layer = topk_idx[layer]   # shape: [seq_len, topk]
+            val_layer = topk_val[layer]   # shape: [seq_len, topk]
+
+            for pos, (tok, experts_arr, scores_arr) in enumerate(zip(tokens, idx_layer, val_layer)):
+                # Ensure we're working with tensors (and convert if needed)
+                if isinstance(experts_arr, torch.Tensor):
+                    experts_arr = experts_arr.cpu()
+                if isinstance(scores_arr, torch.Tensor):
+                    scores_arr = scores_arr.cpu()
+
+                if experts_arr.numel() < top_k:
+                    print("Check experts_arr")
+                    continue  # not enough experts
+
+                # Get the top_k experts/scores and convert to Python lists
+                experts = experts_arr[:top_k].tolist()
+                scores = scores_arr[:top_k].tolist()
+
+                # Use order-sensitive or order-insensitive tuple as key
+                key = tuple(experts) if order_sensitive else tuple(sorted(experts))
+                combined_score = sum(scores)
+
+                entry = coactivation_stats[key]
+                entry["count"] += 1
+
+                # Construct the example
+                example = {
+                    "dataset": dataset_name,
+                    "split": split,
+                    "question_only": question_only,
+                    "sample_idx": sample_idx,
+                    "text": text,
+                    "token": tok,
+                    "tokens": tokens,
+                    "position": pos,
+                    "experts": experts_arr.tolist(),  # full list of experts at this token
+                    "scores": scores_arr.tolist(),    # full list of scores at this token
+                    "combined_score": combined_score
+                }
+
+                # Use counter to ensure unique tuples for heap comparison
+                # Heap tuple: (combined_score, counter, example)
+                heapq.heappush(entry["top_examples_heap"], (combined_score, counter, example))
+                counter += 1
+
+                if len(entry["top_examples_heap"]) > keep_n:
+                    heapq.heappop(entry["top_examples_heap"])  # remove lowest score
+
+    # Convert heap to sorted list (descending by score)
+    final_output = {}
+    for key, value in coactivation_stats.items():
+        sorted_examples = sorted(value["top_examples_heap"], key=lambda x: x[0], reverse=True)
+        final_output[key] = {
+            "count": value["count"],
+            "top_examples": [item[2] for item in sorted_examples]  # Extract example from tuple
+        }
+
+    return final_output
+
+
+def save_coactivation_report(
+    coactivation_stats: Dict[Tuple[int, ...], Dict],
+    tokenizer,
+    save_path: str,
+    context_before: int = 18,
+    top_n: int = 20,
+):
+    """
+    Save co-activation report to a text file with decoded context.
+
+    Args:
+        coactivation_stats: Output of find_expert_coactivations
+        tokenizer: HuggingFace tokenizer (same one used for extraction)
+        save_path: where to save .txt
+        context_before: how many tokens to show before target
+        context_after: how many tokens to show after target
+        top_n: how many expert pairs to log
+    """
+    sorted_items = sorted(
+        coactivation_stats.items(),
+        key=lambda kv: kv[1]["count"],
+        reverse=True
+    )
+
+    with open(save_path, "w", encoding="utf-8") as f:
+        for (experts, info) in sorted_items[:top_n]:
+            f.write(f"Experts {experts} | Count={info['count']}\n")
+            f.write("-" * 60 + "\n")
+
+            for ex in info["top_examples"]:
+                tokens = ex["tokens"]
+                pos = ex["position"]
+
+                context_tokens = tokens[max(0, pos - context_before):min(len(tokens), pos + 1)]
+
+                # Proper decode
+                context_str_preceeding = tokenizer.decode(
+                    tokenizer.convert_tokens_to_ids(tokens[max(0, pos - context_before): pos + 1])
+                )
+
+                context_str_following = tokenizer.decode(
+                    tokenizer.convert_tokens_to_ids(tokens[pos + 1: pos + 5])
+                )
+
+                f.write(
+                    f"   token={ex['token']} ({ex['combined_score']:.3f}), "
+                    f"pos={ex['position']}, "
+                    f"dataset={ex['dataset']}, "
+                    f"preceeding='{context_str_preceeding}', "
+                    f"following='{context_str_following}'\n"
+                )
+
+                # f.write(
+                #     f"[{ex['dataset']}] "
+                #     f"pos={pos}, combined_score={ex['combined_score']:.4f}\n"
+                #     f"Context: {context_str}\n"
+                #     f"Experts={ex['experts']} Scores={ex['scores']}\n\n"
+                # )
+            f.write("\n")
+
+def plot_expert_coactivation_heatmap(
+    datasets: Union[Dict[str, List], List[Dict[str, List]]],
+    layer: int,
+    num_experts: int,
+    save_path: str = "",
+    top_k: int = 2,
+    figsize: tuple = (16, 12),
+    cmap: str = "viridis",
+):
+    """
+    Plot expert co-activation heatmap using matplotlib.
+
+    Assumes:
+        - Always order_sensitive = True
+        - Always normalize = True (per row)
+        - No log scale
+
+    Behavior:
+        - Matrix[i][j] is incremented when expert i is top-1 and expert j is top-2
+        - Matrix is row-normalized
+        - Values >= 0.33 are fully saturated in the colormap
+
+    Args:
+        datasets: Single or list of dataset dicts.
+        layer: Layer to analyze.
+        num_experts: Total number of experts.
+        save_path: Path to save the output image.
+        top_k: Top-k experts per token (only top-2 used).
+        figsize: Size of the matplotlib figure.
+        cmap: Colormap.
+    """
+    if isinstance(datasets, dict):
+        datasets = [datasets]
+
+    coactivation_matrix = np.zeros((num_experts, num_experts), dtype=np.float32)
+
+    for dataset in datasets:
+        tokens_list = dataset["tokens"]
+        indices_list = dataset["topk_indices"]
+
+        for tokens, topk_idx in zip(tokens_list, indices_list):
+            idx_layer = topk_idx[layer]  # shape: [seq_len, top_k]
+
+            for experts_arr in idx_layer:
+                if isinstance(experts_arr, torch.Tensor):
+                    experts_arr = experts_arr.cpu()
+
+                experts = experts_arr[:top_k].tolist()
+
+                # Skip tokens where fewer than 2 experts or duplicates
+                if len(experts) < 2 or len(set(experts)) < 2:
+                    continue
+
+                top1, top2 = experts[0], experts[1]
+                if top1 != top2:  # Just double checking
+                    coactivation_matrix[top1][top2] += 1
+
+    # Row-wise normalization (per top-1 expert)
+    row_sums = coactivation_matrix.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1  # prevent division by zero
+    normalized_matrix = coactivation_matrix / row_sums
+
+    if save_path:
+        # Custom normalization for color mapping: saturate at 0.33
+        # 1/64 roughly equals 0.02
+        norm = Normalize(vmin=0.02, vmax=0.33, clip=True)
+
+        # Plotting
+        fig, ax = plt.subplots(figsize=figsize)
+        im = ax.imshow(normalized_matrix, cmap=cmap, norm=norm)
+
+        ax.set_title(f"Expert Co-activation Heatmap (Layer {layer})")
+        ax.set_xlabel("Top-2 Expert (j)")
+        ax.set_ylabel("Top-1 Expert (i)")
+        ax.set_xticks(np.arange(num_experts))
+        ax.set_yticks(np.arange(num_experts))
+        ax.set_xticklabels(range(num_experts))
+        ax.set_yticklabels(range(num_experts))
+        plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
+
+        # Colorbar
+        cbar = ax.figure.colorbar(im, ax=ax)
+        cbar.ax.set_ylabel("Normalized Co-activation (saturates at 0.33)", rotation=-90, va="bottom")
+
+        plt.tight_layout()
+        plt.savefig(save_path, bbox_inches="tight")
+        plt.close()
+        print(f"[Saved] {save_path}")
+    return normalized_matrix
+
+
+def save_top_coactivating_examples(
+    coactivation_matrix: np.ndarray,
+    coactivation_stats: Dict[Tuple[int, ...], Dict],
+    tokenizer,
+    save_path: str,
+    threshold: float = 0.33,
+    context_before: int = 18,
+    context_after: int = 5,
+):
+    """
+    Save co-activation report for expert pairs with frequency exceeding a threshold.
+
+    Args:
+        coactivation_matrix: Row-normalized matrix [i][j] = P(j | i is top-1)
+        coactivation_stats: Output from find_expert_coactivations(order_sensitive=True)
+        tokenizer: HuggingFace tokenizer
+        save_path: Where to save the report
+        threshold: Minimum normalized co-activation frequency to include
+        context_before: Tokens before the target for context
+        context_after: Tokens after the target for context
+    """
+    num_experts = coactivation_matrix.shape[0]
+
+    with open(save_path, "w", encoding="utf-8") as f:
+        for i in range(num_experts):
+            for j in range(num_experts):
+                freq = coactivation_matrix[i][j]
+
+                if freq < threshold:
+                    continue
+
+                key = (i, j)
+                if key not in coactivation_stats:
+                    continue
+
+                examples = coactivation_stats[key]["top_examples"]
+                count = coactivation_stats[key]["count"]
+                if count < 60:
+                    continue
+                f.write("-" * 60 + "\n")
+                f.write(f"Experts (E{i}, E{j}) | freq={freq:.3f}, count={count}\n")
+                f.write("-" * 60 + "\n")
+
+                for ex in examples:
+                    tokens = ex["tokens"]
+                    pos = ex["position"]
+                    token_str = ex["token"]
+                    dataset = ex["dataset"]
+                    combined_score = ex["combined_score"]
+
+                    # Decode context
+                    start_idx = max(0, pos - context_before)
+                    end_idx = min(len(tokens), pos + 1 + context_after)
+
+                    pre_ids = tokenizer.convert_tokens_to_ids(tokens[start_idx:pos + 1])
+                    post_ids = tokenizer.convert_tokens_to_ids(tokens[pos + 1:end_idx])
+
+                    context_str_pre = tokenizer.decode(pre_ids, skip_special_tokens=True)
+                    context_str_post = tokenizer.decode(post_ids, skip_special_tokens=True)
+
+                    f.write(
+                        f"   token={token_str} ({combined_score:.3f}), "
+                        f"pos={pos}, dataset={dataset}, "
+                        f"pre='{context_str_pre}', post='{context_str_post}'\n"
+                    )
+
+                f.write("\n")
+
+    print(f"[Saved] Co-activation report to: {save_path}")
+
+def save_single_expert_report(
+    expert_id: int,
+    coactivation_matrix: np.ndarray,
+    coactivation_stats: Dict[Tuple[int, ...], Dict],
+    tokenizer,
+    save_path: str,
+    min_count: int = 60,
+    freq_threshold: float = 0.2,
+    context_before: int = 18,
+    context_after: int = 5,
+):
+    """
+    Save report for a single expert (as top-1) showing its most common co-activations and examples.
+
+    Args:
+        expert_id: The expert to focus on (must be top-1 in the pairs).
+        coactivation_matrix: Row-normalized matrix [i][j] = P(j | i is top-1)
+        coactivation_stats: Output from find_expert_coactivations(order_sensitive=True)
+        tokenizer: HuggingFace tokenizer
+        save_path: Path to save the report
+        min_count: Minimum count of this expert being top-1 to include in report
+        freq_threshold: Minimum normalized frequency for (expert_id, j) to include
+        context_before: Number of tokens before the target
+        context_after: Number of tokens after the target
+    """
+    # First check if expert_id has sufficient data
+    total_count = sum(
+        coactivation_stats.get((expert_id, j), {}).get("count", 0)
+        for j in range(coactivation_matrix.shape[1])
+    )
+
+    if total_count < min_count:
+        print(f"[Skip] Expert {expert_id} has only {total_count} top-1 activations (< {min_count})")
+        return
+
+    with open(save_path, "w", encoding="utf-8") as f:
+        f.write(f"Expert {expert_id} (Top-1) Co-activation Report\n")
+        f.write(f"Total Top-1 Count: {total_count}\n")
+        f.write(f"Thresholds → Min Count: {min_count}, Co-activation Freq: {freq_threshold}\n\n")
+
+        for j in range(coactivation_matrix.shape[1]):
+            if j == expert_id:
+                continue  # skip self
+
+            freq = coactivation_matrix[expert_id][j]
+            if freq < freq_threshold:
+                continue
+
+            key = (expert_id, j)
+            if key not in coactivation_stats:
+                continue
+
+            examples = coactivation_stats[key]["top_examples"]
+            f.write("-" * 60 + "\n")
+            f.write(f"Co-activation: Expert ({expert_id}, {j}) | freq={freq:.3f}\n")
+            f.write("-" * 60 + "\n")
+
+            for ex in examples:
+                tokens = ex["tokens"]
+                pos = ex["position"]
+                token_str = ex["token"]
+                dataset = ex["dataset"]
+                combined_score = ex["combined_score"]
+
+                # Decode context
+                start_idx = max(0, pos - context_before)
+                end_idx = min(len(tokens), pos + 1 + context_after)
+
+                pre_ids = tokenizer.convert_tokens_to_ids(tokens[start_idx:pos + 1])
+                post_ids = tokenizer.convert_tokens_to_ids(tokens[pos + 1:end_idx])
+
+                context_str_pre = tokenizer.decode(pre_ids, skip_special_tokens=True)
+                context_str_post = tokenizer.decode(post_ids, skip_special_tokens=True)
+
+                f.write(
+                    f"   token={token_str} ({combined_score:.3f}), "
+                    f"pos={pos}, dataset={dataset}, "
+                    f"pre='{context_str_pre}', post='{context_str_post}'\n"
+                )
+
+            f.write("\n")
+
+    print(f"[Saved] Expert {expert_id} report to: {save_path}")

@@ -1,14 +1,21 @@
 from moe.activation_extraction.run_caching_utils import run_all_datasets
 
 datasets_to_process = [
-    #("gsm8k", False),           # GSM8K with full questions + answers
-    ("gsm8k", True),            # GSM8K with questions only
-    #("arc-easy", False),        # ARC-Easy with full format
-    ("arc-easy", True),         # ARC-Easy with questions only
-    #("arc-challenge", False),   # ARC-Challenge with full format
-    ("arc-challenge", True),    # ARC-Challenge with questions only
-    #("sciq", False),            # sciq with full format
-    ("sciq", True),             # sciq with questions only
+    # False ==> Question: {Q} [Optional: {Choices} or {Reasoning}] Answer:{A}
+    ("gsm8k", False),
+    ("arc-easy", False),
+    ("arc-challenge", False),
+    ("sciq", False),
+    ("mbpp", False),
+    # False ==> Not a question. Just the {statement}
+    ("ag_news", False),
+    ("imdb_pos", False),
+    ("imdb_neg", False),
+    # False/True does not matter for these. Just the {statement}
+    ("poetry", False),
+    ("lex_glue", False),
+    ("arxiv", False),
+    ("personas", False)
 ]
-num_samples = 100
-run_all_datasets(datasets_to_process, num_samples)
+num_samples = 500
+run_all_datasets(datasets_to_process, num_samples, batch_size=10, extract_fn="extract_topk_routing_batch", splits=["train"])

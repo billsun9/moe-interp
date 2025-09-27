@@ -9,18 +9,15 @@ from moe.path_config import MODEL_CACHE_DIR, SAVE_ACTS_PATH_DIR, DATASET_CACHE_D
 
 def process_sample_texts(
     sample_texts: List[str],
-    extractor: OLMoEActivationExtractor,
+    extractor: "OLMoEActivationExtractor",
     dataset_name: str,
     base_save_dir: str = os.path.join(SAVE_ACTS_PATH_DIR, "custom"),
     batch_size: int = 4,
-    metadata = None
+    metadata=None,
+    extract_fn: str = "extract_activations_batch",  # or "extract_topk_routing_batch"
 ) -> str:
     """
-    Process a list of custom sample texts and extract activations.
-
-    Saves to:
-    save_filename = f"{dataset_name}_custom_{num_samples}samples.pt"
-    save_path = os.path.join(base_save_dir, dataset_name, save_filename)
+    Process a list of custom sample texts and extract activations or topK routing.
 
     Args:
         sample_texts: List of texts to process
@@ -29,13 +26,15 @@ def process_sample_texts(
         base_save_dir: Base directory for saving .pt files
         batch_size: Number of samples to process in each batch
         metadata: Optional metadata dictionary or string
+        extract_fn: Which extractor function to call
+                    ("extract_activations_batch" or "extract_topk_routing_batch")
 
     Returns:
         Path to the saved file
     """
     num_samples = len(sample_texts)
     print(f"\n{'='*60}")
-    print(f"Processing custom texts for {dataset_name}...")
+    print(f"Processing custom texts for {dataset_name} with {extract_fn}...")
     print(f"Total samples: {num_samples}")
     print(f"Batch size: {batch_size}")
 
@@ -43,31 +42,33 @@ def process_sample_texts(
     save_filename = f"{dataset_name}_custom_{num_samples}samples.pt"
     save_path = os.path.join(base_save_dir, dataset_name, save_filename)
 
+    # Base container
     all_batch_data = {
         "dataset_name": dataset_name,
         "split": "",  # no split
-        "question_only": "",  # not applicable
+        "question_only": "",
         "texts": [],
         "tokens": [],
-        "prerouting_logits": [],
-        "routing_logits": [],
         "metadata": metadata if metadata else ""
     }
 
+    # Add correct keys depending on extractor type
+    if extract_fn == "extract_activations_batch":
+        all_batch_data.update({"prerouting_logits": [], "routing_logits": []})
+    elif extract_fn == "extract_topk_routing_batch":
+        all_batch_data.update({"topk_indices": [], "topk_scores": []})
+    else:
+        raise ValueError(f"Unknown extract_fn: {extract_fn}")
+
     try:
-        for i in range(0, num_samples, batch_size):
-            batch_texts = sample_texts[i:i+batch_size]
-            batch_end = min(i + batch_size, num_samples)
+        extract_func = getattr(extractor, extract_fn)
+        batch_data = extract_func(sample_texts, batch_size=batch_size)
 
-            print(f"  Processing batch {i//batch_size + 1}: samples {i+1}-{batch_end}")
-            batch_data = extractor.extract_activations_batch(batch_texts)
+        for k in all_batch_data.keys():
+            if k in batch_data:
+                all_batch_data[k].extend(batch_data[k])
 
-            all_batch_data["texts"].extend(batch_data["texts"])
-            all_batch_data["tokens"].extend(batch_data["tokens"])
-            all_batch_data["prerouting_logits"].extend(batch_data["prerouting_logits"])
-            all_batch_data["routing_logits"].extend(batch_data["routing_logits"])
-
-            print(f"    ✅ Batch completed ({len(batch_texts)} samples)")
+        print(f"    ✅ Batch completed ({len(sample_texts)} samples)")
 
         if extractor.save_activations(all_batch_data, save_path):
             print(f"✅ Saved custom activations: {save_path}")
@@ -80,23 +81,22 @@ def process_sample_texts(
 
     return save_path
 
+
 def process_dataset_activations(
     dataset_name: str,
-    extractor: OLMoEActivationExtractor,
+    extractor: "OLMoEActivationExtractor",
     num_samples: int = 25,
     base_save_dir: str = SAVE_ACTS_PATH_DIR,
     question_only: bool = False,
     batch_size: int = 10,
-    metadata = None,
-    dataset_dir: str = DATASET_CACHE_DIR
+    metadata=None,
+    dataset_dir: str = DATASET_CACHE_DIR,
+    extract_fn: str = "extract_activations_batch",  # or "extract_topk_routing_batch",
+    splits: List[str] = ["train", "test"]
 ) -> Dict[str, str]:
     """
-    Process a dataset and extract activations for the first N samples.
+    Process a dataset and extract activations or topK routing.
 
-    saves to following path:
-    save_filename = f"{dataset_name}_{split_name}{question_suffix}_{actual_samples}samples.pt"
-    save_path = os.path.join(base_save_dir, dataset_name, save_filename)
-    
     Args:
         dataset_name: Name of dataset ("gsm8k", "arc-easy", "arc-challenge")
         extractor: Initialized OLMoEActivationExtractor instance
@@ -104,37 +104,42 @@ def process_dataset_activations(
         base_save_dir: Base directory for saving .pt files
         question_only: Whether to use only questions or full formatted text
         batch_size: Number of samples to process in each batch
-        
+        metadata: Optional metadata dictionary or string
+        dataset_dir: Dataset cache location
+        extract_fn: Which extractor function to call
+                    ("extract_activations_batch" or "extract_topk_routing_batch")
+
     Returns:
         Dict mapping split names to save paths
     """
     print(f"\n{'='*60}")
-    print(f"Processing {dataset_name} dataset...")
+    print(f"Processing {dataset_name} dataset with {extract_fn}...")
     print(f"Samples per split: {num_samples}")
     print(f"Question only: {question_only}")
     print(f"Batch size: {batch_size}")
-    
+
     try:
         dataset_dict = load_and_format_dataset(
             dataset_name=dataset_name,
             question_only=question_only,
-            cache_dir=dataset_dir
+            cache_dir=dataset_dir,
+            splits=splits
         )
         print(f"✅ Successfully loaded {dataset_name}")
     except Exception as e:
         print(f"❌ Failed to load dataset {dataset_name}: {e}")
         return {}
-    
+
     save_paths = {}
-    
-    # Train/Test Splits
+    extract_func = getattr(extractor, extract_fn)
+
     for split_name, texts in dataset_dict.items():
         print(f"\n--- Processing {dataset_name} {split_name} split ---")
 
         texts_subset = texts[:num_samples]
         actual_samples = len(texts_subset)
         print(f"Processing {actual_samples} samples from {split_name}")
-        
+
         if actual_samples == 0:
             print(f"⚠️ No samples found in {split_name} split")
             continue
@@ -149,37 +154,28 @@ def process_dataset_activations(
             "question_only": question_only,
             "texts": [],
             "tokens": [],
-            "prerouting_logits": [],
-            "routing_logits": [],
             "metadata": metadata if metadata else ""
         }
-        
-        try:
-            for i in range(0, actual_samples, batch_size):
-                batch_texts = texts_subset[i:i+batch_size]
-                batch_end = min(i + batch_size, actual_samples)
-                
-                print(f"  Processing batch {i//batch_size + 1}: samples {i+1}-{batch_end}")
 
-                batch_data = extractor.extract_activations_batch(batch_texts)
+        if extract_fn == "extract_activations_batch":
+            all_batch_data.update({"prerouting_logits": [], "routing_logits": []})
+        elif extract_fn == "extract_topk_routing_batch":
+            all_batch_data.update({"topk_indices": [], "topk_scores": []})
+        else:
+            raise ValueError(f"Unknown extract_fn: {extract_fn}")
 
-                all_batch_data["texts"].extend(batch_data["texts"])
-                all_batch_data["tokens"].extend(batch_data["tokens"])
-                all_batch_data["prerouting_logits"].extend(batch_data["prerouting_logits"])
-                all_batch_data["routing_logits"].extend(batch_data["routing_logits"])
-                
-                print(f"    ✅ Batch completed ({len(batch_texts)} samples)")
+        batch_data = extract_func(texts_subset, batch_size=batch_size)
 
-            if extractor.save_activations(all_batch_data, save_path):
-                save_paths[split_name] = save_path
-                print(f"✅ Saved {split_name} activations: {save_path}")
-            else:
-                print(f"❌ Failed to save {split_name} activations")
-                
-        except Exception as e:
-            print(f"❌ Error processing {split_name} split: {e}")
-            continue
-    
+        for k in all_batch_data.keys():
+            if k in batch_data:
+                all_batch_data[k].extend(batch_data[k])
+
+        if extractor.save_activations(all_batch_data, save_path):
+            save_paths[split_name] = save_path
+            print(f"✅ Saved {split_name} activations: {save_path}")
+        else:
+            print(f"❌ Failed to save {split_name} activations")
+
     return save_paths
 
 def run_all_datasets(
@@ -188,7 +184,9 @@ def run_all_datasets(
     base_save_dir: str = SAVE_ACTS_PATH_DIR,
     batch_size: int = 4,
     cache_dir: str = MODEL_CACHE_DIR,
-    dataset_dir: str = DATASET_CACHE_DIR
+    dataset_dir: str = DATASET_CACHE_DIR,
+    extract_fn: str = "extract_topk_routing_batch", # or "extract_activations_batch",
+    splits: List[str] = ["train", "test"]
 ):
     """
     Run activation extraction on all supported datasets.
@@ -216,7 +214,9 @@ def run_all_datasets(
                 base_save_dir=base_save_dir,
                 question_only=question_only,
                 batch_size=batch_size,
-                dataset_dir=dataset_dir
+                dataset_dir=dataset_dir,
+                extract_fn=extract_fn,
+                splits=splits
             )
             
             key = f"{dataset_name}_{'questions' if question_only else 'full'}"

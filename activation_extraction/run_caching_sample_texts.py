@@ -64,3 +64,4 @@ data = extractor.load_activations(save_path)
 print(data.keys())
 print(data['metadata'])
 extractor.print_activation_summary(data)
+

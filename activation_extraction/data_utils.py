@@ -1,5 +1,6 @@
 from datasets import load_dataset
 from typing import List, Tuple, Dict
+import json
 
 from moe.path_config import DATASET_CACHE_DIR
 
@@ -7,70 +8,156 @@ def load_and_format_dataset(
     dataset_name: str,
     subset: str = None,
     cache_dir: str = DATASET_CACHE_DIR,
-    question_only: bool = False
+    question_only: bool = False,
+    word_limit: int = 250,
+    splits: List[str] = ["train", "test"]
 ) -> Dict[str, List[str]]:
     """
-    Load and format GSM8K or ARC datasets.
+    Load and format supported datasets.
 
     Args:
-        dataset_name (str): One of ["gsm8k", "arc-easy", "arc-challenge","sciq"]
-        subset (str): Optional Hugging Face subset (defaults are used if None)
-        cache_dir (str): Path to Hugging Face dataset cache
-        question_only (bool): If True, return only questions
+        dataset_name (str): Dataset key.
+        subset (str): Optional Hugging Face subset
+        cache_dir (str): HF dataset cache path
+        question_only (bool): If True, return only the question/prompt
+        word_limit (int): Max number of words in final formatted string
+        splits (List[str]): train/test
 
     Returns:
         dict: {
-            'train': List of formatted strings,
-            'test': List of formatted strings
+            'split_name': [List of formatted strings]
         }
     """
-    # Map dataset_name to HuggingFace IDs
+    # === Dataset mapping ===
     dataset_map = {
         "gsm8k": ("openai/gsm8k", "main"),
         "arc-easy": ("allenai/ai2_arc", "ARC-Easy"),
         "arc-challenge": ("allenai/ai2_arc", "ARC-Challenge"),
-        "sciq": ("allenai/sciq", "default")
+        "sciq": ("allenai/sciq", "default"),
+        "ag_news": ("fancyzhx/ag_news", "default"),
+        "imdb_pos": ("stanfordnlp/imdb", "plain_text"),
+        "imdb_neg": ("stanfordnlp/imdb", "plain_text"),
+        "mbpp": ("mbpp", "full"),
+        "poetry": ("suayptalha/Poetry-Foundation-Poems", "default"),
+        "lex_glue": ("coastalcph/lex_glue", "case_hold"),
+        "arxiv": ("etanios/arxiv-abstracts-full", "default"),
+        "personas": ("allenai/tulu-3-sft-personas-instruction-following", "default")
     }
 
     assert dataset_name in dataset_map, f"Unsupported dataset: {dataset_name}"
-
     hf_name, hf_subset = dataset_map[dataset_name]
     dataset = load_dataset(hf_name, hf_subset if subset is None else subset, cache_dir=cache_dir)
 
+    # === Helper: Truncate ===
+    def truncate(text: str, limit: int) -> str:
+        if limit is None:
+            return text
+        words = text.split()
+        if len(words) <= limit:
+            return text
+        return " ".join(words[:limit]) + "..."
+
+    # === Formatters ===
     def format_gsm8k(example, q_only=False):
-        if q_only:
-            return f"{example['question'].strip()}"
-        return f"Question: {example['question'].strip()}\nAnswer: {example['answer'].strip()}"
+        out = example['question'].strip() if q_only else f"Question: {example['question'].strip()}\nAnswer: {example['answer'].strip()}"
+        return truncate(out, word_limit)
 
     def format_arc(example, q_only=False):
         choices = example['choices']
         choice_str = "\n".join(f"{label}. {text}" for label, text in zip(choices["label"], choices["text"]))
-        if q_only:
-            return f"{example['question'].strip()}"
-        return f"Question: {example['question'].strip()}\nChoices:\n{choice_str}\nAnswer: {example['answerKey']}"
-    
-    def format_sciq(example, q_only=False):
-        if q_only:
-            return f"{example['question'].strip()}"
-        return f"Question: {example['question'].strip()}\nReasoning: {example['support'].strip()}\nAnswer: {example['correct_answer']}"
+        out = example['question'].strip() if q_only else f"Question: {example['question'].strip()}\nChoices:\n{choice_str}\nAnswer: {example['answerKey']}"
+        return truncate(out, word_limit)
 
-    if "gsm8k" in dataset_name:
+    def format_sciq(example, q_only=False):
+        out = example['question'].strip() if q_only else f"Question: {example['question'].strip()}\nReasoning: {example['support'].strip()}\nAnswer: {example['correct_answer']}"
+        return truncate(out, word_limit)
+
+    def format_imdb(example, q_only=False):
+        review = example['text'].strip()
+        out = f"{review}\nWhat is the sentiment of this review?" if q_only else review
+        return truncate(out, word_limit)
+
+    def format_ag_news(example, q_only=False):
+        article = example['text'].strip()
+        out = f"{article}\nWhat is the topic of this article?" if q_only else article
+        return truncate(out, word_limit)
+
+    def format_mbpp(example, q_only=False):
+        text = example["text"].strip()
+        code = example["code"].strip()
+        out = text if q_only else f"Problem: {text}\n\nSolution:\n{code}"
+        return truncate(out, word_limit)
+
+    def format_poetry(example, q_only=False):
+        return truncate(example["Poem"].strip(), word_limit)
+
+    def format_lex_glue(example, q_only=False):
+        return truncate(example["context"].strip(), word_limit)
+
+    def format_arxiv(example, q_only=False):
+        return truncate(example["abstract"].strip(), word_limit)
+
+    def format_arxiv(example, q_only=False):
+        return truncate(example["abstract"].strip(), word_limit)
+
+    def format_personas(example, q_only=False):
+        return truncate(example["prompt"].strip(), word_limit)
+
+    # === Formatter selection ===
+    if dataset_name == "gsm8k":
         formatter = lambda ex: format_gsm8k(ex, q_only=question_only)
-    elif "arc" in dataset_name:
+    elif dataset_name in ["arc-easy", "arc-challenge"]:
         formatter = lambda ex: format_arc(ex, q_only=question_only)
-    elif "sciq" in dataset_name:
+    elif dataset_name == "sciq":
         formatter = lambda ex: format_sciq(ex, q_only=question_only)
+    elif dataset_name == "ag_news":
+        formatter = lambda ex: format_ag_news(ex, q_only=question_only)
+    elif dataset_name in ["imdb_pos", "imdb_neg"]:
+        target_label = 1 if dataset_name == "imdb_pos" else 0
+        formatter = lambda ex: format_imdb(ex, q_only=question_only)
+        return {
+            split: [formatter(ex) for ex in dataset[split] if ex["label"] == target_label]
+            for split in dataset.keys() if split in splits
+        }
+    elif dataset_name == "mbpp":
+        formatter = lambda ex: format_mbpp(ex, q_only=question_only)
+    elif dataset_name == "poetry":
+        formatter = lambda ex: format_poetry(ex)
+    elif dataset_name == "lex_glue":
+        formatter = lambda ex: format_lex_glue(ex)
+    elif dataset_name == "arxiv":
+        formatter = lambda ex: format_arxiv(ex)
+    elif dataset_name == "personas":
+        formatter = lambda ex: format_personas(ex)
+    else:
+        raise ValueError(f"No formatter defined for dataset {dataset_name}")
 
     return {
         split: [formatter(ex) for ex in dataset[split]]
-        for split in dataset.keys() if split in ["train", "test"]
+        for split in dataset.keys() if split in splits
     }
 
 
 def test_load_and_format_dataset(cache_dir = DATASET_CACHE_DIR):
-    dataset_names = ["gsm8k", "arc-easy", "arc-challenge", "sciq"]
+    dataset_names = [
+        # False ==> Question: {Q} [Optional: {Choices} or {Reasoning}] Answer:{A}
+        # ("gsm8k", False),
+        # ("arc-easy", False),
+        # ("arc-challenge", False),
+        # ("sciq", False),
+        # ("mbpp", False),
+        # # False ==> Not a question. Just the {statement}
+        # ("ag_news", False),
+        # ("imdb_pos", False),
+        # ("imdb_neg", False),
+        # False/True does not matter for these. Just the {statement}
+        ("poetry", False),
+        ("lex_glue", False),
+        ("arxiv", False),
+        ("personas", False)
+    ]
 
-    for name in dataset_names:
+    for name, _ in dataset_names:
         print(f"\n=== Testing {name.upper()} ===")
         
         for question_only in [False, True]:
@@ -85,7 +172,7 @@ def test_load_and_format_dataset(cache_dir = DATASET_CACHE_DIR):
                 # Show counts and examples
                 for split in data:
                     print(f"\n[{name} - {split}]: {len(data[split])} examples")
-                    for i, example in enumerate(data[split][:3]):
+                    for i, example in enumerate(data[split][:1]):
                         print(f"\nExample {i + 1}:\n{example}")
 
             except Exception as e:
