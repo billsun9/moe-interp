@@ -14,3 +14,4 @@ DATASET_CACHE_DIR = os.path.join(BASE_PATH, "datasets_cache") # datasets
 SAVE_ACTS_PATH_DIR = os.path.join(BASE_PATH, "research/data/OLMoE-acts/") # cached activations
 SAVE_FIGS_PATH_DIR = os.path.join(BASE_PATH, "research/data/figs/") # figures
 SAVE_ARTIFACTS_PATH_DIR = os.path.join(BASE_PATH, "research/data/artifacts/") # e.g. log files
+SNMF_DATA_DIR = os.path.join(BASE_PATH, "research/moe/snmf") # This is used just to access SNMF data path

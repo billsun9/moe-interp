@@ -1,0 +1,1522 @@
+{
+  "feature_0": [
+    {
+      "token": " expressions",
+      "activation": 0.04500516131520271,
+      "context": "Modern Spanish continually evolves with new slang and contemporary expressions.",
+      "token_index": 1058
+    },
+    {
+      "token": " become",
+      "activation": 0.045094382017850876,
+      "context": "Many Spanish phrases have become part of everyday international vocabulary.",
+      "token_index": 983
+    },
+    {
+      "token": " around",
+      "activation": 0.04514238238334656,
+      "context": "Language schools around the world offer courses in Japanese, reflecting its international allure.",
+      "token_index": 2915
+    },
+    {
+      "token": " of",
+      "activation": 0.045146726071834564,
+      "context": "The influence of Chinese language and culture can be seen in art, cuisine, and traditions worldwide",
+      "token_index": 284
+    },
+    {
+      "token": " of",
+      "activation": 0.04552273824810982,
+      "context": "The lyrical pronunciation of Spanish adds beauty to its spoken word.",
+      "token_index": 1025
+    },
+    {
+      "token": " have",
+      "activation": 0.04565879702568054,
+      "context": "Many Spanish phrases have become part of everyday international vocabulary.",
+      "token_index": 982
+    },
+    {
+      "token": " of",
+      "activation": 0.04576824977993965,
+      "context": "The lyrical pronunciation of Italian makes every conversation sound like music.",
+      "token_index": 1755
+    },
+    {
+      "token": ".",
+      "activation": 0.04624216631054878,
+      "context": "The expressive tone of Spanish makes it a language full of passion and rhythm.",
+      "token_index": 914
+    },
+    {
+      "token": " tales",
+      "activation": 0.046288058161735535,
+      "context": "omatic expressions in Chinese, like 'Chengyu', often derive from historical tales.",
+      "token_index": 141
+    },
+    {
+      "token": " of",
+      "activation": 0.04629264399409294,
+      "context": "The natural cadence of Spanish often makes it a favorite language for music and poetry.",
+      "token_index": 966
+    },
+    {
+      "token": " of",
+      "activation": 0.04633767902851105,
+      "context": "The introduction of simplified Chinese characters has made reading more accessible.",
+      "token_index": 174
+    },
+    {
+      "token": " in",
+      "activation": 0.04723537340760231,
+      "context": "University courses in Chinese are increasingly popular as global interest grows.",
+      "token_index": 272
+    },
+    {
+      "token": " of",
+      "activation": 0.04819566383957863,
+      "context": "The impact of German on scientific and technical vocabulary is evident worldwide.",
+      "token_index": 2157
+    },
+    {
+      "token": ".",
+      "activation": 0.04850364848971367,
+      "context": "Renowned for its precise grammar, French is a language of refined expression.",
+      "token_index": 1919
+    },
+    {
+      "token": " of",
+      "activation": 0.048933811485767365,
+      "context": "The spread of Arabic was closely linked to the expansion of the early Islamic empire.",
+      "token_index": 792
+    },
+    {
+      "token": " of",
+      "activation": 0.04945148155093193,
+      "context": "The tonal nature of Chinese adds layers of meaning to its spoken words.",
+      "token_index": 147
+    },
+    {
+      "token": " intertw",
+      "activation": 0.050499554723501205,
+      "context": "Modern French culture is deeply intertwined with its distinctive language and art.",
+      "token_index": 1811
+    },
+    {
+      "token": " of",
+      "activation": 0.05165695399045944,
+      "context": "The intricacies of Spanish grammar, with its gendered nouns and verb conjugations, present",
+      "token_index": 1113
+    },
+    {
+      "token": " of",
+      "activation": 0.053012486547231674,
+      "context": "The global rise of K-pop has significantly boosted the popularity of the Korean language.",
+      "token_index": 2413
+    },
+    {
+      "token": " of",
+      "activation": 0.05339911952614784,
+      "context": "The structure of Japanese grammar presents unique challenges and rewards for learners.",
+      "token_index": 2725
+    },
+    {
+      "token": " of",
+      "activation": 0.053431231528520584,
+      "context": "The complex grammar of Russian—with its cases and declensions—offers an intriguing challenge.",
+      "token_index": 1300
+    },
+    {
+      "token": " of",
+      "activation": 0.05376606807112694,
+      "context": "The grammar of Arabic, with its intricate rules, presents a fascinating linguistic challenge.",
+      "token_index": 776
+    },
+    {
+      "token": " in",
+      "activation": 0.05456303060054779,
+      "context": "Traditional idioms in Japanese often express cultural values and historical narratives.",
+      "token_index": 2888
+    },
+    {
+      "token": " of",
+      "activation": 0.058966755867004395,
+      "context": "The history of the Russian language spans centuries of cultural evolution.",
+      "token_index": 1334
+    },
+    {
+      "token": " of",
+      "activation": 0.0754561647772789,
+      "context": "The logical structure of the Korean language makes learning it a rewarding challenge.",
+      "token_index": 2479
+    }
+  ],
+  "feature_1": [
+    {
+      "token": " of",
+      "activation": 0.047981321811676025,
+      "context": "The evolution of Korean mirrors the dynamic changes occurring in modern society.",
+      "token_index": 2550
+    },
+    {
+      "token": "aly",
+      "activation": 0.04803990572690964,
+      "context": "Italy’s rich art and architecture are closely tied to its expressive language.",
+      "token_index": 1610
+    },
+    {
+      "token": "aditional",
+      "activation": 0.048051346093416214,
+      "context": "Traditional German idioms reflect the practical wisdom and humor of its speakers.",
+      "token_index": 2169
+    },
+    {
+      "token": " traditional",
+      "activation": 0.04806114733219147,
+      "context": "Festivals in Korea often celebrate both traditional heritage and the evolving language.",
+      "token_index": 2640
+    },
+    {
+      "token": "aditional",
+      "activation": 0.04821541905403137,
+      "context": "Traditional Arabic proverbs are steeped in history and cultural wisdom.",
+      "token_index": 747
+    },
+    {
+      "token": "aditional",
+      "activation": 0.04840870946645737,
+      "context": "Traditional idioms in Japanese often express cultural values and historical narratives.",
+      "token_index": 2885
+    },
+    {
+      "token": "aditional",
+      "activation": 0.04857820272445679,
+      "context": "Traditional Korean proverbs offer wisdom that has been passed down through generations.",
+      "token_index": 2461
+    },
+    {
+      "token": "aditional",
+      "activation": 0.04872019961476326,
+      "context": "Traditional Chinese calligraphy is celebrated as an art form that blends technique and expression.",
+      "token_index": 29
+    },
+    {
+      "token": "aditional",
+      "activation": 0.04925806447863579,
+      "context": "Traditional festivals in Japan often highlight the beauty of its language and customs.",
+      "token_index": 2765
+    },
+    {
+      "token": " classical",
+      "activation": 0.049371834844350815,
+      "context": "Modern German skillfully blends classical expressions with new, innovative slang.",
+      "token_index": 2280
+    },
+    {
+      "token": "ored",
+      "activation": 0.04995147883892059,
+      "context": "Modern Russian successfully blends time-honored expressions with evolving slang.",
+      "token_index": 1290
+    },
+    {
+      "token": "ed",
+      "activation": 0.0508134700357914,
+      "context": "Traditional Arabic proverbs are steeped in history and cultural wisdom.",
+      "token_index": 754
+    },
+    {
+      "token": " traditions",
+      "activation": 0.05145707726478577,
+      "context": "Contemporary Korean media presents a vibrant mix of age-old traditions and modern trends.",
+      "token_index": 2455
+    },
+    {
+      "token": " of",
+      "activation": 0.05262862518429756,
+      "context": "The spread of Arabic was closely linked to the expansion of the early Islamic empire.",
+      "token_index": 800
+    },
+    {
+      "token": " across",
+      "activation": 0.052897609770298004,
+      "context": "Festivals across Russia highlight the cultural importance of its language.",
+      "token_index": 1362
+    },
+    {
+      "token": "old",
+      "activation": 0.053277116268873215,
+      "context": "Contemporary Korean media presents a vibrant mix of age-old traditions and modern trends.",
+      "token_index": 2454
+    },
+    {
+      "token": " of",
+      "activation": 0.05340304598212242,
+      "context": "The global rise of K-pop has significantly boosted the popularity of the Korean language.",
+      "token_index": 2413
+    },
+    {
+      "token": " of",
+      "activation": 0.054063525050878525,
+      "context": "The spread of Arabic was closely linked to the expansion of the early Islamic empire.",
+      "token_index": 792
+    },
+    {
+      "token": " traditional",
+      "activation": 0.054286278784275055,
+      "context": "Modern Korean artfully blends traditional expressions with contemporary slang.",
+      "token_index": 2388
+    },
+    {
+      "token": " of",
+      "activation": 0.055612556636333466,
+      "context": "The history of the Russian language spans centuries of cultural evolution.",
+      "token_index": 1334
+    },
+    {
+      "token": " in",
+      "activation": 0.05644886940717697,
+      "context": "Traditional idioms in Japanese often express cultural values and historical narratives.",
+      "token_index": 2888
+    },
+    {
+      "token": " push",
+      "activation": 0.0592988058924675,
+      "context": "Modern German literature continues to push creative boundaries and innovate.",
+      "token_index": 2148
+    },
+    {
+      "token": " in",
+      "activation": 0.06017456576228142,
+      "context": "Traditional festivals in Japan often highlight the beauty of its language and customs.",
+      "token_index": 2767
+    },
+    {
+      "token": " tradition",
+      "activation": 0.060465358197689056,
+      "context": "Modern media in Japan reflects a dynamic interplay between tradition and innovation.",
+      "token_index": 2880
+    },
+    {
+      "token": " tradition",
+      "activation": 0.06357543915510178,
+      "context": "Contemporary Arabic media reflects a blend of tradition and modern storytelling.",
+      "token_index": 769
+    }
+  ],
+  "feature_2": [
+    {
+      "token": " language",
+      "activation": 0.049509935081005096,
+      "context": "Modern French culture is deeply intertwined with its distinctive language and art.",
+      "token_index": 1816
+    },
+    {
+      "token": " Italian",
+      "activation": 0.05009675770998001,
+      "context": "The lyrical pronunciation of Italian makes every conversation sound like music.",
+      "token_index": 1756
+    },
+    {
+      "token": " traditions",
+      "activation": 0.050381820648908615,
+      "context": "Contemporary Korean media presents a vibrant mix of age-old traditions and modern trends.",
+      "token_index": 2455
+    },
+    {
+      "token": " language",
+      "activation": 0.05075505003333092,
+      "context": "The influence of Chinese language and culture can be seen in art, cuisine, and traditions worldwide.",
+      "token_index": 286
+    },
+    {
+      "token": " language",
+      "activation": 0.05098285526037216,
+      "context": "Festivals across Russia highlight the cultural importance of its language.",
+      "token_index": 1370
+    },
+    {
+      "token": " language",
+      "activation": 0.051311515271663666,
+      "context": "Traditional festivals in Japan often highlight the beauty of its language and customs.",
+      "token_index": 2775
+    },
+    {
+      "token": " culture",
+      "activation": 0.051657840609550476,
+      "context": "Exploring the German language offers a window into a culture rich in history and innovation.",
+      "token_index": 2340
+    },
+    {
+      "token": " traditional",
+      "activation": 0.0527462363243103,
+      "context": "Modern Korean artfully blends traditional expressions with contemporary slang.",
+      "token_index": 2388
+    },
+    {
+      "token": "oms",
+      "activation": 0.0528230182826519,
+      "context": "Many Chinese idioms are intertwined with natural imagery and philosophical insights.",
+      "token_index": 245
+    },
+    {
+      "token": " language",
+      "activation": 0.053831566125154495,
+      "context": "ular Korean films and dramas have introduced many to the nuances of the language.",
+      "token_index": 2588
+    },
+    {
+      "token": " culture",
+      "activation": 0.05416912958025932,
+      "context": "Studying Korean offers a glimpse into a culture with a profound historical legacy.",
+      "token_index": 2403
+    },
+    {
+      "token": " language",
+      "activation": 0.0547482967376709,
+      "context": "The global appeal of Japanese pop culture has brought attention to its language worldwide.",
+      "token_index": 2910
+    },
+    {
+      "token": " language",
+      "activation": 0.055023133754730225,
+      "context": "A blend of modern and traditional influences makes the Japanese language truly unique.",
+      "token_index": 2817
+    },
+    {
+      "token": "oms",
+      "activation": 0.05504446476697922,
+      "context": "Russian idioms and proverbs often reflect the resilience and spirit of its people.",
+      "token_index": 1268
+    },
+    {
+      "token": " from",
+      "activation": 0.05509491264820099,
+      "context": "Modern Hebrew has evolved by incorporating loanwords from various European languages.",
+      "token_index": 450
+    },
+    {
+      "token": "words",
+      "activation": 0.05536099895834923,
+      "context": "Modern Hebrew has evolved by incorporating loanwords from various European languages.",
+      "token_index": 449
+    },
+    {
+      "token": " language",
+      "activation": 0.056373078376054764,
+      "context": "The melodic rhythm of French makes it a popular language to learn and recite.",
+      "token_index": 2000
+    },
+    {
+      "token": " culture",
+      "activation": 0.057871319353580475,
+      "context": "Learning Italian provides a glimpse into a culture steeped in history and creativity.",
+      "token_index": 1545
+    },
+    {
+      "token": "words",
+      "activation": 0.05849900096654892,
+      "context": "Modern Japanese effortlessly incorporates loanwords from English and other languages.",
+      "token_index": 2757
+    },
+    {
+      "token": " expressions",
+      "activation": 0.05861377716064453,
+      "context": "Many Italian expressions capture the soul and history of the country.",
+      "token_index": 1740
+    },
+    {
+      "token": " language",
+      "activation": 0.06074156239628792,
+      "context": "The expressive tone of Spanish makes it a language full of passion and rhythm.",
+      "token_index": 908
+    },
+    {
+      "token": " language",
+      "activation": 0.06324631720781326,
+      "context": "Spanish is more than just a language—it is a vibrant window into rich histories and traditions.",
+      "token_index": 1173
+    },
+    {
+      "token": " languages",
+      "activation": 0.06551642715930939,
+      "context": "Modern Hebrew has evolved by incorporating loanwords from various European languages.",
+      "token_index": 453
+    },
+    {
+      "token": " language",
+      "activation": 0.06827528774738312,
+      "context": "The natural cadence of Spanish often makes it a favorite language for music and poetry.",
+      "token_index": 973
+    },
+    {
+      "token": " English",
+      "activation": 0.07263698428869247,
+      "context": "Modern Japanese effortlessly incorporates loanwords from English and other languages.",
+      "token_index": 2759
+    }
+  ],
+  "feature_3": [
+    {
+      "token": " language",
+      "activation": 0.0588921383023262,
+      "context": "Festivals in Italy often celebrate the language through music, dance, and drama.",
+      "token_index": 1729
+    },
+    {
+      "token": " system",
+      "activation": 0.059334252029657364,
+      "context": "The Chinese writing system uses thousands of unique characters to express meaning.",
+      "token_index": 18
+    },
+    {
+      "token": " language",
+      "activation": 0.059459980577230453,
+      "context": "Traditional storytelling in Japan is closely linked to the nuances of its language.",
+      "token_index": 2943
+    },
+    {
+      "token": " cases",
+      "activation": 0.059946686029434204,
+      "context": "German grammar, with its cases and gendered nouns, presents a fascinating linguistic structure.",
+      "token_index": 2117
+    },
+    {
+      "token": " films",
+      "activation": 0.060064177960157394,
+      "context": "Popular Korean films and dramas have introduced many to the nuances of the language.",
+      "token_index": 2575
+    },
+    {
+      "token": "words",
+      "activation": 0.0605928935110569,
+      "context": "Modern Hebrew has evolved by incorporating loanwords from various European languages.",
+      "token_index": 449
+    },
+    {
+      "token": " grammar",
+      "activation": 0.06067933887243271,
+      "context": "The structure of Japanese grammar presents unique challenges and rewards for learners.",
+      "token_index": 2727
+    },
+    {
+      "token": " grammar",
+      "activation": 0.06157398596405983,
+      "context": "The complex grammar of Russian—with its cases and declensions—offers an intriguing challenge",
+      "token_index": 1299
+    },
+    {
+      "token": " writing",
+      "activation": 0.06172165647149086,
+      "context": "Calligraphy in Arabic is not just writing—it is a celebrated form of art.",
+      "token_index": 692
+    },
+    {
+      "token": " cases",
+      "activation": 0.06186501309275627,
+      "context": "The complex grammar of Russian—with its cases and declensions—offers an intriguing challenge.",
+      "token_index": 1305
+    },
+    {
+      "token": " language",
+      "activation": 0.06233416870236397,
+      "context": "Korean culture is celebrated worldwide, with its language playing a central role.",
+      "token_index": 2499
+    },
+    {
+      "token": " words",
+      "activation": 0.062483932822942734,
+      "context": "The formation of compound words in German reveals the language’s analytical nature.",
+      "token_index": 2293
+    },
+    {
+      "token": " language",
+      "activation": 0.06404411792755127,
+      "context": "Arabic is a language with a rich history and a deep cultural impact across continents.",
+      "token_index": 586
+    },
+    {
+      "token": "oms",
+      "activation": 0.06432345509529114,
+      "context": "Many Chinese idioms are intertwined with natural imagery and philosophical insights.",
+      "token_index": 245
+    },
+    {
+      "token": " language",
+      "activation": 0.06497857719659805,
+      "context": "French is celebrated as a language of love, art, and international diplomacy.",
+      "token_index": 1783
+    },
+    {
+      "token": " of",
+      "activation": 0.06532309204339981,
+      "context": "The logical structure of the Korean language makes learning it a rewarding challenge.",
+      "token_index": 2479
+    },
+    {
+      "token": "unciation",
+      "activation": 0.06760316342115402,
+      "context": "The lyrical pronunciation of Italian makes every conversation sound like music.",
+      "token_index": 1754
+    },
+    {
+      "token": " language",
+      "activation": 0.06781239062547684,
+      "context": "Modern French culture is deeply intertwined with its distinctive language and art.",
+      "token_index": 1816
+    },
+    {
+      "token": "unciation",
+      "activation": 0.07006793469190598,
+      "context": "The lyrical pronunciation of Spanish adds beauty to its spoken word.",
+      "token_index": 1024
+    },
+    {
+      "token": " language",
+      "activation": 0.07100740820169449,
+      "context": "Traditional festivals in Japan often highlight the beauty of its language and customs.",
+      "token_index": 2775
+    },
+    {
+      "token": " language",
+      "activation": 0.07106252014636993,
+      "context": "Festivals across Russia highlight the cultural importance of its language.",
+      "token_index": 1370
+    },
+    {
+      "token": " language",
+      "activation": 0.07185758650302887,
+      "context": "Literary giants such as Goethe and Schiller have made German a language of high art.",
+      "token_index": 2270
+    },
+    {
+      "token": " language",
+      "activation": 0.07304877042770386,
+      "context": "The global rise of K-pop has significantly boosted the popularity of the Korean language.",
+      "token_index": 2425
+    },
+    {
+      "token": " language",
+      "activation": 0.07484203577041626,
+      "context": "Festivals in Germany often feature songs and traditions that celebrate the language.",
+      "token_index": 2241
+    },
+    {
+      "token": " language",
+      "activation": 0.07516852766275406,
+      "context": "A blend of modern and traditional influences makes the Japanese language truly unique.",
+      "token_index": 2817
+    }
+  ],
+  "feature_4": [
+    {
+      "token": " visually",
+      "activation": 0.0554233081638813,
+      "context": "With its right-to-left script, Arabic offers a visually distinctive reading experience.",
+      "token_index": 727
+    },
+    {
+      "token": " rich",
+      "activation": 0.05570623651146889,
+      "context": "Exploring Hebrew opens a window into a rich tapestry of religious and cultural narratives.",
+      "token_index": 573
+    },
+    {
+      "token": " a",
+      "activation": 0.05590325593948364,
+      "context": "Studying Chinese opens doors to a rich cultural heritage and historical depth.",
+      "token_index": 88
+    },
+    {
+      "token": " rich",
+      "activation": 0.05599283054471016,
+      "context": "Arabic is a language with a rich history and a deep cultural impact across continents.",
+      "token_index": 589
+    },
+    {
+      "token": " rich",
+      "activation": 0.0562010258436203,
+      "context": "The evolution of the German language mirrors the rich cultural history of the nation.",
+      "token_index": 2191
+    },
+    {
+      "token": " an",
+      "activation": 0.056540947407484055,
+      "context": "Traditional Chinese calligraphy is celebrated as an art form that blends technique and expression.",
+      "token_index": 36
+    },
+    {
+      "token": " deep",
+      "activation": 0.05707930028438568,
+      "context": "Many Hebrew expressions carry deep spiritual and historical significance.",
+      "token_index": 559
+    },
+    {
+      "token": "ia",
+      "activation": 0.057487111538648605,
+      "context": "Learning German opens up diverse opportunities in academia and global business.",
+      "token_index": 2107
+    },
+    {
+      "token": " language",
+      "activation": 0.057641319930553436,
+      "context": "The Japanese language is at the heart of the country’s vibrant artistic heritage.",
+      "token_index": 2857
+    },
+    {
+      "token": " a",
+      "activation": 0.057760708034038544,
+      "context": "Modern Russian media reflects a fusion of classical storytelling with contemporary news.",
+      "token_index": 1437
+    },
+    {
+      "token": " a",
+      "activation": 0.05839259922504425,
+      "context": "Calligraphy in Arabic is not just writing—it is a celebrated form of art.",
+      "token_index": 696
+    },
+    {
+      "token": " delightful",
+      "activation": 0.05844581872224808,
+      "context": "Learning Italian is a delightful journey into the art and spirit of Italy.",
+      "token_index": 1768
+    },
+    {
+      "token": " window",
+      "activation": 0.05875950679183006,
+      "context": "Traditional Russian proverbs offer a window into the values and hardships of its past.",
+      "token_index": 1407
+    },
+    {
+      "token": " a",
+      "activation": 0.059270281344652176,
+      "context": "Contemporary Arabic media reflects a blend of tradition and modern storytelling.",
+      "token_index": 766
+    },
+    {
+      "token": " a",
+      "activation": 0.059596795588731766,
+      "context": "Exploring Hebrew opens a window into a rich tapestry of religious and cultural narratives.",
+      "token_index": 572
+    },
+    {
+      "token": " concise",
+      "activation": 0.06000994145870209,
+      "context": "Chinese proverbs are renowned for their wisdom and concise expressions of life lessons.",
+      "token_index": 106
+    },
+    {
+      "token": "ive",
+      "activation": 0.06180356442928314,
+      "context": "Arabic music and poetry are celebrated worldwide for their emotive power and lyrical beauty.",
+      "token_index": 850
+    },
+    {
+      "token": " a",
+      "activation": 0.062176041305065155,
+      "context": "The language embodies a blend of European traditions and Latin American spirit.",
+      "token_index": 1079
+    },
+    {
+      "token": "ing",
+      "activation": 0.06339963525533676,
+      "context": "Learning Russian can be an enriching journey through a storied past and vibrant present.",
+      "token_index": 1482
+    },
+    {
+      "token": "oy",
+      "activation": 0.0639423131942749,
+      "context": "Russian literature boasts giants like Tolstoy, Dostoevsky, and Chekhov.",
+      "token_index": 1224
+    },
+    {
+      "token": " an",
+      "activation": 0.06537562608718872,
+      "context": "Japanese calligraphy is both an art form and a means of powerful expression.",
+      "token_index": 2741
+    },
+    {
+      "token": " profound",
+      "activation": 0.06656981259584427,
+      "context": "Emotive Russian poetry is celebrated for its lyrical beauty and profound themes.",
+      "token_index": 1356
+    },
+    {
+      "token": " artistic",
+      "activation": 0.0682448223233223,
+      "context": "Korean calligraphy is an artistic practice that highlights the beauty of the language.",
+      "token_index": 2610
+    },
+    {
+      "token": " vibrant",
+      "activation": 0.07201950252056122,
+      "context": "Spanish is more than just a language—it is a vibrant window into rich histories and traditions.",
+      "token_index": 1178
+    },
+    {
+      "token": " profound",
+      "activation": 0.08526444435119629,
+      "context": "Classical Chinese poetry is admired for its brevity and profound imagery.",
+      "token_index": 169
+    }
+  ],
+  "feature_5": [
+    {
+      "token": "ing",
+      "activation": 0.05140545964241028,
+      "context": "Learning Russian can be an enriching journey through a storied past and vibrant present.",
+      "token_index": 1482
+    },
+    {
+      "token": " language",
+      "activation": 0.05147445201873779,
+      "context": "A blend of modern and traditional influences makes the Japanese language truly unique.",
+      "token_index": 2817
+    },
+    {
+      "token": " enrich",
+      "activation": 0.05147795006632805,
+      "context": "Learning Russian can be an enriching journey through a storied past and vibrant present.",
+      "token_index": 1481
+    },
+    {
+      "token": " language",
+      "activation": 0.052545417100191116,
+      "context": "Spanish is more than just a language—it is a vibrant window into rich histories and traditions.",
+      "token_index": 1173
+    },
+    {
+      "token": " vibrant",
+      "activation": 0.052587732672691345,
+      "context": "Chinese opera combines music, drama, and language into a vibrant cultural spectacle.",
+      "token_index": 224
+    },
+    {
+      "token": " world",
+      "activation": 0.052861303091049194,
+      "context": "Mandarin Chinese is spoken by over a billion people around the world.",
+      "token_index": 13
+    },
+    {
+      "token": "ak",
+      "activation": 0.05292743071913719,
+      "context": " features a unique mix of kanji, hiragana, and katakana.",
+      "token_index": 2694
+    },
+    {
+      "token": " a",
+      "activation": 0.05295313522219658,
+      "context": "Exploring Hebrew opens a window into a rich tapestry of religious and cultural narratives.",
+      "token_index": 572
+    },
+    {
+      "token": " culture",
+      "activation": 0.05315903201699257,
+      "context": "Exploring the German language offers a window into a culture rich in history and innovation.",
+      "token_index": 2340
+    },
+    {
+      "token": " cultural",
+      "activation": 0.053529106080532074,
+      "context": "Studying Chinese opens doors to a rich cultural heritage and historical depth.",
+      "token_index": 90
+    },
+    {
+      "token": " people",
+      "activation": 0.05376609042286873,
+      "context": "Mandarin Chinese is spoken by over a billion people around the world.",
+      "token_index": 10
+    },
+    {
+      "token": " life",
+      "activation": 0.053869009017944336,
+      "context": "Learning French is not only about language but also about embracing a unique way of life.",
+      "token_index": 2066
+    },
+    {
+      "token": " international",
+      "activation": 0.054804980754852295,
+      "context": "French is celebrated as a language of love, art, and international diplomacy.",
+      "token_index": 1790
+    },
+    {
+      "token": " around",
+      "activation": 0.05489523336291313,
+      "context": "Mandarin Chinese is spoken by over a billion people around the world.",
+      "token_index": 11
+    },
+    {
+      "token": " world",
+      "activation": 0.058272767812013626,
+      "context": "Learning Japanese opens a door to a world of refined expression and cultural depth.",
+      "token_index": 2952
+    },
+    {
+      "token": " heritage",
+      "activation": 0.05997398495674133,
+      "context": "Learning Korean opens doors to understanding a rich cultural heritage.",
+      "token_index": 2570
+    },
+    {
+      "token": " culture",
+      "activation": 0.06040261313319206,
+      "context": "Learning Japanese provides insight into a culture rich in history and innovation.",
+      "token_index": 2703
+    },
+    {
+      "token": " global",
+      "activation": 0.06112468242645264,
+      "context": "Spanish is celebrated for its contributions to art, music, and global literature.",
+      "token_index": 1072
+    },
+    {
+      "token": " languages",
+      "activation": 0.06159711629152298,
+      "context": "The Arabic language has enriched many other languages through loanwords and expressions.",
+      "token_index": 678
+    },
+    {
+      "token": " cultural",
+      "activation": 0.06346838921308517,
+      "context": "Globally, Spanish language courses attract learners with their cultural allure.",
+      "token_index": 1163
+    },
+    {
+      "token": " language",
+      "activation": 0.06413861364126205,
+      "context": "Arabic is a language with a rich history and a deep cultural impact across continents.",
+      "token_index": 586
+    },
+    {
+      "token": " culture",
+      "activation": 0.06431451439857483,
+      "context": "Learning Italian provides a glimpse into a culture steeped in history and creativity.",
+      "token_index": 1545
+    },
+    {
+      "token": " international",
+      "activation": 0.06454498320817947,
+      "context": "The French language plays a key role in international organizations and diplomatic circles.",
+      "token_index": 1883
+    },
+    {
+      "token": " heritage",
+      "activation": 0.06537539511919022,
+      "context": "Studying Chinese opens doors to a rich cultural heritage and historical depth.",
+      "token_index": 91
+    },
+    {
+      "token": " people",
+      "activation": 0.06556086242198944,
+      "context": "Spanish is one of the most widely spoken languages, connecting people across continents.",
+      "token_index": 896
+    }
+  ],
+  "feature_6": [
+    {
+      "token": " rich",
+      "activation": 0.04708129167556763,
+      "context": "Regional variations in Spanish reflect the rich cultural diversity of its speakers.",
+      "token_index": 1041
+    },
+    {
+      "token": "ity",
+      "activation": 0.04725712165236473,
+      "context": "Italian is known for its musicality and expressive, lyrical tone.",
+      "token_index": 1499
+    },
+    {
+      "token": " Italian",
+      "activation": 0.04758480191230774,
+      "context": "The melodious nature of Italian makes it particularly appealing to language enthusiasts.",
+      "token_index": 1572
+    },
+    {
+      "token": " geography",
+      "activation": 0.04771917313337326,
+      "context": "Diverse regional dialects in Russian mirror the vast geography of the nation.",
+      "token_index": 1428
+    },
+    {
+      "token": " Chinese",
+      "activation": 0.047839339822530746,
+      "context": "The introduction of simplified Chinese characters has made reading more accessible.",
+      "token_index": 176
+    },
+    {
+      "token": " international",
+      "activation": 0.04835253953933716,
+      "context": "Many Spanish phrases have become part of everyday international vocabulary.",
+      "token_index": 987
+    },
+    {
+      "token": " to",
+      "activation": 0.048664044588804245,
+      "context": "Studying Russian allows one to delve into rich historical narratives and cultural identity.",
+      "token_index": 1451
+    },
+    {
+      "token": " for",
+      "activation": 0.04872426763176918,
+      "context": "German is renowned for its precision and the unique way it forms compound words.",
+      "token_index": 2071
+    },
+    {
+      "token": " nation",
+      "activation": 0.04976808279752731,
+      "context": "Diverse regional dialects in Russian mirror the vast geography of the nation.",
+      "token_index": 1431
+    },
+    {
+      "token": " diversity",
+      "activation": 0.05034923553466797,
+      "context": "Italian cuisine, famous globally, mirrors the diversity of dialects found in Italy.",
+      "token_index": 1633
+    },
+    {
+      "token": " technical",
+      "activation": 0.050528328865766525,
+      "context": "The clear and systematic nature of German makes it ideal for technical subjects.",
+      "token_index": 2315
+    },
+    {
+      "token": " experiences",
+      "activation": 0.051046110689640045,
+      "context": "Learning Spanish enhances travel experiences in many vibrant countries.",
+      "token_index": 1104
+    },
+    {
+      "token": " love",
+      "activation": 0.051146216690540314,
+      "context": "French is celebrated as a language of love, art, and international diplomacy.",
+      "token_index": 1785
+    },
+    {
+      "token": " its",
+      "activation": 0.05137668922543526,
+      "context": "Spanish is celebrated for its contributions to art, music, and global literature.",
+      "token_index": 1064
+    },
+    {
+      "token": " rich",
+      "activation": 0.051721733063459396,
+      "context": "The evolution of the German language mirrors the rich cultural history of the nation.",
+      "token_index": 2191
+    },
+    {
+      "token": " beauty",
+      "activation": 0.052190061658620834,
+      "context": "Korean calligraphy is an artistic practice that highlights the beauty of the language.",
+      "token_index": 2615
+    },
+    {
+      "token": " language",
+      "activation": 0.05436069145798683,
+      "context": "The history of the Russian language spans centuries of cultural evolution.",
+      "token_index": 1337
+    },
+    {
+      "token": " connecting",
+      "activation": 0.05652288347482681,
+      "context": "Spanish is one of the most widely spoken languages, connecting people across continents.",
+      "token_index": 895
+    },
+    {
+      "token": " languages",
+      "activation": 0.058097243309020996,
+      "context": "The Arabic language has enriched many other languages through loanwords and expressions.",
+      "token_index": 678
+    },
+    {
+      "token": " languages",
+      "activation": 0.06037554517388344,
+      "context": "Hebrew is one of the oldest continuously used languages in the world.",
+      "token_index": 310
+    },
+    {
+      "token": " Hebrew",
+      "activation": 0.06127836927771568,
+      "context": "As the official language of Israel, Hebrew is a cornerstone of national identity.",
+      "token_index": 367
+    },
+    {
+      "token": " its",
+      "activation": 0.06304240226745605,
+      "context": "Italian is known for its musicality and expressive, lyrical tone.",
+      "token_index": 1497
+    },
+    {
+      "token": " its",
+      "activation": 0.06317305564880371,
+      "context": "German is celebrated for its significant contributions to music, philosophy, and literature.",
+      "token_index": 2202
+    },
+    {
+      "token": " its",
+      "activation": 0.07198714464902878,
+      "context": "German is renowned for its precision and the unique way it forms compound words.",
+      "token_index": 2072
+    },
+    {
+      "token": " has",
+      "activation": 0.07209277898073196,
+      "context": "Over the millennia, Hebrew has merged ancient tradition with modern usage.",
+      "token_index": 506
+    }
+  ],
+  "feature_7": [
+    {
+      "token": " a",
+      "activation": 0.055904898792505264,
+      "context": "Chinese opera combines music, drama, and language into a vibrant cultural spectacle.",
+      "token_index": 223
+    },
+    {
+      "token": " elegant",
+      "activation": 0.056475766003131866,
+      "context": "Studying Japanese reveals the intricacies of an elegant and layered writing system.",
+      "token_index": 2849
+    },
+    {
+      "token": " ly",
+      "activation": 0.057456910610198975,
+      "context": "Italian is known for its musicality and expressive, lyrical tone.",
+      "token_index": 1503
+    },
+    {
+      "token": " fl",
+      "activation": 0.05784882605075836,
+      "context": "French cinema has long been recognized for its innovative storytelling and artistic flair.",
+      "token_index": 1846
+    },
+    {
+      "token": "ive",
+      "activation": 0.05824028328061104,
+      "context": "Arabic music and poetry are celebrated worldwide for their emotive power and lyrical beauty.",
+      "token_index": 850
+    },
+    {
+      "token": " nu",
+      "activation": 0.05824995040893555,
+      "context": "French idioms capture subtle emotions and a nuanced cultural history.",
+      "token_index": 1870
+    },
+    {
+      "token": " nu",
+      "activation": 0.058503568172454834,
+      "context": "Traditional storytelling in Japan is closely linked to the nuances of its language.",
+      "token_index": 2939
+    },
+    {
+      "token": " writing",
+      "activation": 0.05853823944926262,
+      "context": "Calligraphy in Arabic is not just writing—it is a celebrated form of art.",
+      "token_index": 692
+    },
+    {
+      "token": " sophistic",
+      "activation": 0.05881727859377861,
+      "context": "Fashion and art in France are closely linked to the sophistication of its language.",
+      "token_index": 1944
+    },
+    {
+      "token": "inct",
+      "activation": 0.06013040244579315,
+      "context": "Japanese literature spans from succinct haiku to expansive contemporary novels.",
+      "token_index": 2715
+    },
+    {
+      "token": " del",
+      "activation": 0.06023408845067024,
+      "context": "Studying Russian allows one to delve into rich historical narratives and cultural identity.",
+      "token_index": 1452
+    },
+    {
+      "token": "hon",
+      "activation": 0.0608459934592247,
+      "context": "Modern Russian successfully blends time-honored expressions with evolving slang.",
+      "token_index": 1289
+    },
+    {
+      "token": "ak",
+      "activation": 0.06152140349149704,
+      "context": " features a unique mix of kanji, hiragana, and katakana.",
+      "token_index": 2694
+    },
+    {
+      "token": " rewarding",
+      "activation": 0.06206291913986206,
+      "context": "The logical structure of the Korean language makes learning it a rewarding challenge.",
+      "token_index": 2487
+    },
+    {
+      "token": " delightful",
+      "activation": 0.06343082338571548,
+      "context": "The rhythmic flow of Italian speech is as delightful as its culinary traditions.",
+      "token_index": 1650
+    },
+    {
+      "token": "el",
+      "activation": 0.06346317380666733,
+      "context": "Spanish cinema has left an indelible mark on global film and storytelling.",
+      "token_index": 996
+    },
+    {
+      "token": " nu",
+      "activation": 0.06361351907253265,
+      "context": "Popular Korean films and dramas have introduced many to the nuances of the language.",
+      "token_index": 2584
+    },
+    {
+      "token": " subtle",
+      "activation": 0.06393690407276154,
+      "context": "Unique expressions in Korean capture the subtle cultural nuances of daily life.",
+      "token_index": 2596
+    },
+    {
+      "token": " delightful",
+      "activation": 0.06419745832681656,
+      "context": "Learning Italian is a delightful journey into the art and spirit of Italy.",
+      "token_index": 1768
+    },
+    {
+      "token": " profound",
+      "activation": 0.0643366128206253,
+      "context": "Classical Chinese poetry is admired for its brevity and profound imagery.",
+      "token_index": 169
+    },
+    {
+      "token": " poet",
+      "activation": 0.06836379319429398,
+      "context": "The expansive vocabulary of Arabic allows speakers to articulate complex ideas poetically.",
+      "token_index": 743
+    },
+    {
+      "token": " emotional",
+      "activation": 0.06845684349536896,
+      "context": "The expressive intonation of Russian adds emotional depth to its spoken word.",
+      "token_index": 1259
+    },
+    {
+      "token": " emot",
+      "activation": 0.06982466578483582,
+      "context": "Arabic music and poetry are celebrated worldwide for their emotive power and lyrical beauty.",
+      "token_index": 849
+    },
+    {
+      "token": " intric",
+      "activation": 0.07461825013160706,
+      "context": "Studying Japanese reveals the intricacies of an elegant and layered writing system.",
+      "token_index": 2845
+    },
+    {
+      "token": " intertw",
+      "activation": 0.0801352933049202,
+      "context": "Modern French culture is deeply intertwined with its distinctive language and art.",
+      "token_index": 1811
+    }
+  ],
+  "feature_8": [
+    {
+      "token": " Western",
+      "activation": 0.04342099279165268,
+      "context": "The structural differences between Chinese and Western languages make learning it an adventure.",
+      "token_index": 262
+    },
+    {
+      "token": " full",
+      "activation": 0.043536603450775146,
+      "context": "The expressive tone of Spanish makes it a language full of passion and rhythm.",
+      "token_index": 909
+    },
+    {
+      "token": " to",
+      "activation": 0.044024426490068436,
+      "context": "The melodic rhythm of French makes it a popular language to learn and recite.",
+      "token_index": 2001
+    },
+    {
+      "token": " worldwide",
+      "activation": 0.04459841549396515,
+      "context": "Arabic music and poetry are celebrated worldwide for their emotive power and lyrical beauty.",
+      "token_index": 846
+    },
+    {
+      "token": "’",
+      "activation": 0.044860806316137314,
+      "context": "Studying Arabic deepens one’s appreciation of art, history, and diverse cultural practices.",
+      "token_index": 826
+    },
+    {
+      "token": " letters",
+      "activation": 0.04505259543657303,
+      "context": "The Hebrew alphabet, consisting of 22 letters, provides each with a unique sound.",
+      "token_index": 433
+    },
+    {
+      "token": " Israel",
+      "activation": 0.045199550688266754,
+      "context": "As the official language of Israel, Hebrew is a cornerstone of national identity.",
+      "token_index": 365
+    },
+    {
+      "token": " novels",
+      "activation": 0.046025339514017105,
+      "context": "Hebrew literature spans from timeless scriptures to modern novels.",
+      "token_index": 413
+    },
+    {
+      "token": " an",
+      "activation": 0.04693014547228813,
+      "context": "Studying Japanese reveals the intricacies of an elegant and layered writing system.",
+      "token_index": 2848
+    },
+    {
+      "token": " world",
+      "activation": 0.04727872461080551,
+      "context": "Italian opera is celebrated around the world for its passion and drama.",
+      "token_index": 1559
+    },
+    {
+      "token": " words",
+      "activation": 0.04761968180537224,
+      "context": "The formation of compound words in German reveals the language’s analytical nature.",
+      "token_index": 2293
+    },
+    {
+      "token": " both",
+      "activation": 0.04869993403553963,
+      "context": "Modern French incorporates both traditional expressions and fresh, contemporary ideas.",
+      "token_index": 2042
+    },
+    {
+      "token": " languages",
+      "activation": 0.04975607246160507,
+      "context": "The structural differences between Chinese and Western languages make learning it an adventure.",
+      "token_index": 263
+    },
+    {
+      "token": "s",
+      "activation": 0.05052851513028145,
+      "context": "Over centuries, Spanish has evolved through a blend of regional dialects.",
+      "token_index": 960
+    },
+    {
+      "token": " concise",
+      "activation": 0.05109532177448273,
+      "context": "Chinese proverbs are renowned for their wisdom and concise expressions of life lessons.",
+      "token_index": 106
+    },
+    {
+      "token": " Hebrew",
+      "activation": 0.05161473900079727,
+      "context": "As the official language of Israel, Hebrew is a cornerstone of national identity.",
+      "token_index": 367
+    },
+    {
+      "token": " an",
+      "activation": 0.052598532289266586,
+      "context": "Spanish cinema has left an indelible mark on global film and storytelling.",
+      "token_index": 994
+    },
+    {
+      "token": " achievement",
+      "activation": 0.05267519876360893,
+      "context": "The revival of modern Hebrew in the 19th century stands as a remarkable linguistic achievement.",
+      "token_index": 330
+    },
+    {
+      "token": " in",
+      "activation": 0.05568140000104904,
+      "context": "Traditional festivals in Japan often highlight the beauty of its language and customs.",
+      "token_index": 2767
+    },
+    {
+      "token": " dialect",
+      "activation": 0.05574946105480194,
+      "context": "The evolution of Italian has been influenced by numerous regional dialects over time.",
+      "token_index": 1604
+    },
+    {
+      "token": " in",
+      "activation": 0.05626107007265091,
+      "context": "The formation of compound words in German reveals the language’s analytical nature.",
+      "token_index": 2294
+    },
+    {
+      "token": " in",
+      "activation": 0.057578470557928085,
+      "context": "Idiomatic expressions in Chinese, like 'Chengyu', often derive from historical tales.",
+      "token_index": 128
+    },
+    {
+      "token": "antes",
+      "activation": 0.05794785916805267,
+      "context": "Spanish literature is enriched by classics from Cervantes to Gabriel García Márquez.",
+      "token_index": 924
+    },
+    {
+      "token": " a",
+      "activation": 0.05964941903948784,
+      "context": "Chinese opera combines music, drama, and language into a vibrant cultural spectacle.",
+      "token_index": 223
+    },
+    {
+      "token": " in",
+      "activation": 0.06653109937906265,
+      "context": "Traditional idioms in Japanese often express cultural values and historical narratives.",
+      "token_index": 2888
+    }
+  ],
+  "feature_9": [
+    {
+      "token": " international",
+      "activation": 0.0537307932972908,
+      "context": "The French language plays a key role in international organizations and diplomatic circles.",
+      "token_index": 1883
+    },
+    {
+      "token": " language",
+      "activation": 0.05401263013482094,
+      "context": "Festivals across Russia highlight the cultural importance of its language.",
+      "token_index": 1370
+    },
+    {
+      "token": " language",
+      "activation": 0.05406603217124939,
+      "context": "The Japanese language is at the heart of the country’s vibrant artistic heritage.",
+      "token_index": 2857
+    },
+    {
+      "token": "ina",
+      "activation": 0.05597253516316414,
+      "context": "Festivals like La Tomatina showcase the lively and communal spirit of the Spanish language.",
+      "token_index": 1140
+    },
+    {
+      "token": " language",
+      "activation": 0.056079696863889694,
+      "context": "As the official language of Israel, Hebrew is a cornerstone of national identity.",
+      "token_index": 363
+    },
+    {
+      "token": " is",
+      "activation": 0.05619184300303459,
+      "context": "As the official language of Israel, Hebrew is a cornerstone of national identity.",
+      "token_index": 368
+    },
+    {
+      "token": " deep",
+      "activation": 0.05653419345617294,
+      "context": "Many Japanese proverbs convey deep cultural wisdom and life lessons.",
+      "token_index": 2800
+    },
+    {
+      "token": " Chinese",
+      "activation": 0.05773070827126503,
+      "context": "The introduction of simplified Chinese characters has made reading more accessible.",
+      "token_index": 176
+    },
+    {
+      "token": ",",
+      "activation": 0.05834787338972092,
+      "context": "Written from right to left, the Hebrew script is both elegant and distinctive.",
+      "token_index": 337
+    },
+    {
+      "token": " international",
+      "activation": 0.05877699702978134,
+      "context": "Arabic remains essential in international dialogue, literature, and diplomatic relations.",
+      "token_index": 876
+    },
+    {
+      "token": " international",
+      "activation": 0.05947669968008995,
+      "context": "Many Spanish phrases have become part of everyday international vocabulary.",
+      "token_index": 987
+    },
+    {
+      "token": " Spanish",
+      "activation": 0.05998023971915245,
+      "context": "Regional variations in Spanish reflect the rich cultural diversity of its speakers.",
+      "token_index": 1038
+    },
+    {
+      "token": " both",
+      "activation": 0.060016829520463943,
+      "context": "Hebrew calligraphy is an art that celebrates both form and cultural heritage.",
+      "token_index": 536
+    },
+    {
+      "token": " widely",
+      "activation": 0.06041065230965614,
+      "context": "Spanish is one of the most widely spoken languages, connecting people across continents.",
+      "token_index": 891
+    },
+    {
+      "token": "arin",
+      "activation": 0.060870975255966187,
+      "context": "Many dialects exist in Chinese, with Mandarin and Cantonese being among the most recognized.",
+      "token_index": 71
+    },
+    {
+      "token": " vocabulary",
+      "activation": 0.06134074553847313,
+      "context": "The impact of German on scientific and technical vocabulary is evident worldwide.",
+      "token_index": 2163
+    },
+    {
+      "token": " languages",
+      "activation": 0.06172783672809601,
+      "context": "Spanish is one of the most widely spoken languages, connecting people across continents.",
+      "token_index": 893
+    },
+    {
+      "token": " language",
+      "activation": 0.06209883093833923,
+      "context": "Russian is a Slavic language known for its deep literary and cultural heritage.",
+      "token_index": 1191
+    },
+    {
+      "token": " language",
+      "activation": 0.06327761709690094,
+      "context": "Festivals in China often highlight ancient customs and the beauty of the Chinese language.",
+      "token_index": 60
+    },
+    {
+      "token": " French",
+      "activation": 0.06409379839897156,
+      "context": "Regional variations in French highlight the diverse cultural landscape of France.",
+      "token_index": 1924
+    },
+    {
+      "token": " sophistic",
+      "activation": 0.06508246064186096,
+      "context": "Fashion and art in France are closely linked to the sophistication of its language.",
+      "token_index": 1944
+    },
+    {
+      "token": " most",
+      "activation": 0.06606242805719376,
+      "context": "Spanish is one of the most widely spoken languages, connecting people across continents.",
+      "token_index": 890
+    },
+    {
+      "token": " language",
+      "activation": 0.07243230193853378,
+      "context": "The Italian language is often associated with romance, art, and passion.",
+      "token_index": 1694
+    },
+    {
+      "token": " language",
+      "activation": 0.07640722393989563,
+      "context": "The Italian language is a vital component of the nation's art, music, and culinary heritage",
+      "token_index": 1509
+    },
+    {
+      "token": " vocabulary",
+      "activation": 0.07816745340824127,
+      "context": "Many Spanish phrases have become part of everyday international vocabulary.",
+      "token_index": 988
+    }
+  ]
+}
